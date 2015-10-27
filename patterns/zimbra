@@ -10,4 +10,4 @@ ZMAUDIT %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL}  %{ZMPROGRAM} %{ZMCLIENT} 
 
 
 # mailbox.log
-%{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL}  %{ZMPROGRAM} %{ZMCLIENT} %{WORD:protocol} - %{WORD:command} elapsed=%{NUMBER:elapsed}
+ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL}  %{ZMPROGRAM} %{ZMCLIENT} %{WORD:protocol} - %{WORD:command} elapsed=%{NUMBER:elapsed}
