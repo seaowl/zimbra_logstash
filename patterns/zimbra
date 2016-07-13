@@ -12,4 +12,5 @@ ZMAUDIT %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL}  %{ZMPROGRAM} %{ZMCLIENT} 
 # mailbox.log
 ELAPSED elapsed=%{NUMBER:elapsed}
 MAILBOX_COMMAND (\(batch\) )?%{WORD}( %{WORD}:)?
-ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?%{ZMPROGRAM} %{ZMCLIENT} %{WORD:protocol} - %{MAILBOX_COMMAND:command}( %{ELAPSED})?( %{GREEDYDATA:command_params})?( %{NUMBER:elapsed}ms)?
+COMMAND_EXTRA ( %{GREEDYDATA:command_params})? (%{NUMBER:elapsed}ms)?
+ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?%{ZMPROGRAM} %{ZMCLIENT} %{WORD:protocol} - %{MAILBOX_COMMAND:command}( %{ELAPSED})?(%{COMMAND_EXTRA})?
