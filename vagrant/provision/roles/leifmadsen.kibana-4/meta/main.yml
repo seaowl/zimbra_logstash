@@ -1,0 +1,25 @@
+galaxy_info:
+  author: leifmadsen
+  description: Kibana 4 for Linux
+  company: "Red Hat, Inc."
+  license: "license (Apache)"
+
+  min_ansible_version: 2.1
+  github_branch: master
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  - name: Debian
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
+  galaxy_tags:
+  - web
+  - system
+  - monitoring
+
+dependencies: []

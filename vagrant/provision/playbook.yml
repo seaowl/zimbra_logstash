@@ -1,0 +1,11 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+
+  roles:
+    - role: common
+    - { role: elasticsearch, es_instance_name: "node1" }
+    - { role: 'geerlingguy.nginx' }
+    - { role: 'leifmadsen.kibana-4' }
+    - { role: geerlingguy.logstash }

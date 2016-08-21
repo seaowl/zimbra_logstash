@@ -1,7 +1,6 @@
 output {
   elasticsearch {
-    hosts => ["localhost"]
+    hosts => ["{{ logstash_elasticsearch_host }}"]
     template_overwrite => true
   }
-  stdout { codec => rubydebug }
 }
