@@ -5,7 +5,7 @@
 
   roles:
     - role: common
-    - { role: elasticsearch, es_instance_name: "node1" }
+    - { role: elasticsearch, es_instance_name: "node1", es_version: "2.3.5" }
     - { role: 'geerlingguy.nginx' }
     - { role: 'leifmadsen.kibana-4' }
     - { role: geerlingguy.logstash }
