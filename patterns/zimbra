@@ -11,6 +11,13 @@ ZMAUDIT %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL}  %{ZMPROGRAM} %{ZMCLIENT} 
 
 # mailbox.log
 ELAPSED elapsed=%{NUMBER:elapsed}
-MAILBOX_COMMAND (\(batch\) )?%{WORD}( %{WORD}:)?
+MAILBOX_COMMAND (\(batch\) )?%{WORD:command}( %{WORD:item_type}(:)? )?
 COMMAND_EXTRA ( %{GREEDYDATA:command_params})? (%{NUMBER:elapsed}ms)?
-ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?%{ZMPROGRAM} %{ZMCLIENT} %{DATA:protocol} - %{MAILBOX_COMMAND:command} ((id=%{NUMBER:item_id},)? (Message-ID=<%{DATA:messageid}>,)? (parentId=%{NUMBER:parent_id},)? (folderId=%{NUMBER:folder_id},)? (folderName=%{DATA:folder_name}$)?)?(elapsed=%{NUMBER:elapsed})?
+
+ADDING_MESSAGE_OP id=%{NUMBER:item_id},)? (Message-ID=<%{DATA:messageid}>,)? (parentId=%{NUMBER:parent_id},)? (folderId=%{NUMBER:folder_id},)? (folderName=%{DATA:folder_name}$
+
+MOVING_MESSAGE_OP \(id=%{NUMBER:item_id}\) to Folder %{DATA:folder_name} \(id=%{NUMBER:folder_id}\)
+
+DELETING_MESSAGE_OP (\(id=%{NUMBER:item_id}\))?(%{DATA:items_ids})?\.$
+
+ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?%{ZMPROGRAM} %{ZMCLIENT} %{DATA:protocol} - %{MAILBOX_COMMAND}((%{ADDING_MESSAGE_OP})?(%{MOVING_MESSAGE_OP})?(%{DELETING_MESSAGE_OP})?)?(elapsed=%{NUMBER:elapsed})?
