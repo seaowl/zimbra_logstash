@@ -1,9 +1,11 @@
 # audit.log
+ZMQTP \[qtp%{NUMBER:qtp_process}-%{DATA:qtp_thread}:%{DATA:qtp_info}\]
 ZMLOGLEVEL %{WORD:level}
-ZMPROCESS %{PROG:process}
+ZMPROCESS %{DATA:zm_process}
 ZMTHREAD %{NONNEGINT:thread}
+ZMUSERAGENT %{DATA:user_agent}(/| - )%{DATA:user_agent_ver}
 ZMPROGRAM \[%{ZMPROCESS}(-%{ZMTHREAD})?(:%{DATA:program_info})?\]
-ZMCLIENT \[(name=%{DATA:username};)?(aname=%{DATA:delegated_username};)?(mid=%{NUMBER:mid};)?(ip=%{IPORHOST:src_ip};)?(DeviceID=%{DATA:device};)?(oip=%{IPORHOST:clientip}(, %{IPORHOST:clientip})?;)?(via=%{DATA:via};)?(ua=%{DATA:user_agent};)?\]
+ZMCLIENT \[(name=%{DATA:username};)?(aname=%{DATA:delegated_username};)?(mid=%{NUMBER:mid};)?(ip=%{IPORHOST:src_ip};)?(DeviceID=%{DATA:device};)?(oip=%{IPORHOST:clientip}(, %{IPORHOST:clientip})?;)?(via=%{DATA:via};)?(ua=%{ZMUSERAGENT t};)?\]
 ZMCOMMAND cmd=%{WORD:command}
 ZMCOMMAND_PARAMS (%{WORD:username_type}=%{DATA:username}(; protocol=%{WORD:protocol})?(; error=%{DATA:error})?(; feature=%{WORD:feature})?(; member=%{DATA:member})?(; status=%{WORD:status})?;)?
 ZMAUDIT %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL}  %{ZMPROGRAM} %{ZMCLIENT} security - %{ZMCOMMAND};( %{ZMCOMMAND_PARAMS})?
@@ -20,4 +22,4 @@ MOVING_MESSAGE_OP \(id=%{NUMBER:item_id}\) to Folder %{DATA:folder_name} \(id=%{
 
 DELETING_MESSAGE_OP (\(id=%{NUMBER:item_id}\))?(%{DATA:items_ids})?\.$
 
-ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?%{ZMPROGRAM} %{ZMCLIENT} %{DATA:protocol} - %{MAILBOX_COMMAND}((%{ADDING_MESSAGE_OP})?(%{MOVING_MESSAGE_OP})?(%{DELETING_MESSAGE_OP})?)?(elapsed=%{NUMBER:elapsed})?
+ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?(%{ZMQTP}|%{ZMPROGRAM}) %{ZMCLIENT} %{DATA:protocol} - %{MAILBOX_COMMAND}((%{ADDING_MESSAGE_OP})?(%{MOVING_MESSAGE_OP})?(%{DELETING_MESSAGE_OP})?)?( elapsed=%{NUMBER:elapsed})?
