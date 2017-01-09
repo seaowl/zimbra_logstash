@@ -20,6 +20,6 @@ ADDING_MESSAGE_OP id=%{NUMBER:item_id},)? (Message-ID=<%{DATA:messageid}>,)? (pa
 
 MOVING_MESSAGE_OP \(id=%{NUMBER:item_id}\) to Folder %{DATA:folder_name} \(id=%{NUMBER:folder_id}\)
 
-DELETING_MESSAGE_OP (\(id=%{NUMBER:item_id}\))?(%{DATA:items_ids})?\.$
+DELETING_MESSAGE_OP (\(id=%{NUMBER:item_id}\))?\.$
 
 ZMMAILBOX %{TIMESTAMP_ISO8601:created_at} %{ZMLOGLEVEL} ( )?(%{ZMQTP}|%{ZMPROGRAM}) %{ZMCLIENT} %{DATA:protocol} - %{MAILBOX_COMMAND}((%{ADDING_MESSAGE_OP})?(%{MOVING_MESSAGE_OP})?(%{DELETING_MESSAGE_OP})?)?( elapsed=%{NUMBER:elapsed})?
